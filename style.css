@@ -114,11 +114,13 @@ fieldset {
     padding-left: 0.75em;
     display: flex;
     justify-content: space-around;
+    gap: 3rem;
 }
 
 .form-cell {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .form-cell label {
@@ -132,4 +134,16 @@ fieldset {
     border-radius: 4px;
     padding: 7px;
     font-size: 14px;
+}
+
+button {
+    width: 200px;
+    height: 45px;
+    border-radius: 5px;
+    background-color: #596D48;
+    border: 0;
+    color: white;
+    font-weight: bold;
+    margin-left: 3.5em;
+    box-shadow: 0 0 10px 10px #dedede;
 }

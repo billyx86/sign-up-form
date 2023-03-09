@@ -4,7 +4,7 @@
 }
 
 :root {
-    max-width: 100%
+    max-width: 100%;
 }
 
 body {
@@ -34,7 +34,7 @@ body {
     background-size: cover;
 }
 
-.splash-container p, a {
+.blur-shadow {
     color: white;
     text-shadow: black 3px 3px 5px;
 }
@@ -66,4 +66,36 @@ body {
 .content-container {
     background-color: #efefef;
     flex: 1.75;
+    display: flex;
+    gap: 2em;
+    flex-direction: column;
+    justify-content: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.content-container h2 {
+    padding-left: 2em;
+    padding-right: 3em;
+    font-size: 1.25em;
+}
+
+.content-container p {
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.content-container a {
+    color: #596D48;
+    font-weight: bold;
+}
+
+.form-container {
+    background-color: white;
+    border: 2px lightgray;
+    border-style: solid none;
+    box-shadow: 0 0  3px #dedede;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 2em;
+    padding-right: 2em;
 }

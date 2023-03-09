@@ -99,3 +99,11 @@ body {
     padding-left: 2em;
     padding-right: 2em;
 }
+
+.form-container h2 {
+    padding-left: 0.5em;
+}
+
+fieldset {
+    border: 0;
+}

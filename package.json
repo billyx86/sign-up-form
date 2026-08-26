@@ -1,0 +1,10 @@
+{
+  "name": "sign-up-form",
+  "version": "1.0.0",
+  "description": "A playfully-styled Odin sign-up form (The Odin Project project).",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -25,6 +25,37 @@ test("the submit button lives inside the <form>", () => {
     );
 });
 
+test("form uses POST so no credentials end up in the URL/query string", () => {
+    const m = html.match(/<form\b[^>]*>/i);
+    assert.ok(m, "no <form> tag found");
+    assert.ok(!/method=["']get["']/i.test(m[0]),
+        "form method is GET — the password and every other field value would be serialised into the URL (server logs, browser history, Referer headers)");
+    assert.ok(/action=["']#["']/i.test(m[0]),
+        "form should keep action=\"#\" — this is a demo with no backend");
+});
+
+test("the phone field no longer locks users into exactly 11 digits", () => {
+    const m = html.match(/<input\b[^>]*id=["']number["'][^>]*>/i);
+    assert.ok(m, "no #number phone input found");
+    assert.ok(!/\bminlength=["']11["']/.test(m[0]),
+        "minlength=11 on a tel field rejects every real UK number (11 significant digits, but spaces/dashes/+ make the raw string longer)");
+    assert.ok(!/\bmaxlength=["']11["']/.test(m[0]),
+        "maxlength=11 has the same problem and also blocks a leading +");
+    assert.ok(/\btype=["']tel["']/.test(m[0]), "#number should stay type=tel so mobile browsers show a phone keypad");
+});
+
+test("password confirmation is validated (JS + error element)", () => {
+    assert.ok(/<script\b[^>]*src=["']script\.js["'][^>]*>/i.test(html),
+        "index.html should load script.js for the cross-field password check");
+    assert.ok(html.includes('id="pw-error"'),
+        "missing #pw-error element that script.js toggles");
+    // The error must sit inside the form so its position/visibility follow it
+    const form = html.slice(html.search(/<form\b/i), html.search(/<\/form>/i));
+    assert.ok(form.includes('id="pw-error"'), "#pw-error must live inside the <form>");
+    assert.match(form, /\brole=["']alert["']/, "the error should have role=alert so it is announced");
+    assert.ok(existsSync(path.join(root, "script.js")), "script.js is missing");
+});
+
 test("every input uses a valid HTML type", () => {
     const valid = new Set([
         "text", "email", "password", "tel", "number", "search", "url",

@@ -23,45 +23,48 @@
                 <h2>You <em>know</em> you want to.</h2>
             </div>
             <div class="form-container">
+                <!-- Front-end-only demo: no backend exists, so action="#" is
+                     intentional — submitting sends nowhere. method="post"
+                     keeps values out of the URL either way. See README. -->
                 <form action="#" method="post">
                     <h2>Let's do this!</h2>
                     <fieldset>
                         <div class="form-cell">
                             <label for="first-name">First Name</label>
-                            <input name="first-name" id="first-name" type="text" required>
+                            <input name="first-name" id="first-name" type="text" autocomplete="given-name" required>
                         </div>
 
                         <div class="form-cell">
                             <label for="last-name">Last Name</label>
-                            <input name="last-name" id="last-name" type="text" required>
+                            <input name="last-name" id="last-name" type="text" autocomplete="family-name" required>
                         </div>
                     </fieldset>
                     <fieldset>
                         <div class="form-cell">
                             <label for="email">Email</label>
-                            <input name="email" id="email" type="email" required>
+                            <input name="email" id="email" type="email" autocomplete="email" required>
                         </div>
 
                         <div class="form-cell">
                             <label for="number">Phone Number</label>
-                            <input name="number" id="number" type="tel" inputmode="tel" placeholder="+44 7700 900000" required>
+                            <input name="number" id="number" type="tel" inputmode="tel" autocomplete="tel" placeholder="+44 7700 900000" required>
                         </div>
                     </fieldset>
                     <fieldset>
                         <div class="form-cell">
                             <label for="password">Password</label>
-                            <input name="password" id="password" type="password" minlength="8" required>
+                            <input name="password" id="password" type="password" minlength="8" autocomplete="new-password" required>
                         </div>
 
                         <div class="form-cell">
                             <label for="confirm-password">Confirm Password</label>
-                            <input name="confirm-password" id="confirm-password" type="password" minlength="8" required>
+                            <input name="confirm-password" id="confirm-password" type="password" minlength="8" autocomplete="new-password" required>
                         </div>
                     </fieldset>
                     <div>
                         <button type="submit">Create Account</button>
                         <p id="pw-error" role="alert" hidden>Passwords do not match. Please re-enter both passwords.</p>
-                        <p>Already have an account? <a href="#">Log in</a></p>
+                        <p>Already have an account? There isn't one — this is a front-end-only design demo (no backend, no login route).</p>
                     </div>
                 </form>
             </div>

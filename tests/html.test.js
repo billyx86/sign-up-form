@@ -106,3 +106,40 @@ test("local href/src references point at existing files", () => {
         assert.ok(existsSync(path.join(root, ref)), `local reference "${ref}" does not exist`);
     }
 });
+
+test("every input has an autocomplete hint so autofill and assistive tech work (#7)", () => {
+    const field = (id) => html.match(new RegExp(`<input\\b[^>]*\\bid=["']${id}["'][^>]*>`, "i"))?.[0] ?? "";
+    const expected = {
+        "first-name": "given-name",
+        "last-name": "family-name",
+        email: "email",
+        number: "tel",
+        password: "new-password",
+        "confirm-password": "new-password",
+    };
+    for (const [id, token] of Object.entries(expected)) {
+        const input = field(id);
+        assert.ok(input, `#${id} input not found`);
+        assert.ok(
+            input.includes(`autocomplete="${token}"`),
+            `#${id} should have autocomplete="${token}"`
+        );
+    }
+});
+
+test("no dead href=\"#\" links are presented as working controls (#8)", () => {
+    const deadLinks = [...html.matchAll(/<a\b[^>]*\bhref=["']#["'][^>]*>/gi)];
+    assert.deepEqual(
+        deadLinks.map((m) => m[0]),
+        [],
+        `dead href="#" link(s) presented as working control(s): ${deadLinks.map((m) => m[0]).join(" ")}`
+    );
+});
+
+test("the front-end-only demo posture is documented (action=\"#\" is intentional) (#9)", () => {
+    const form = html.match(/<form\b[^>]*>/i)?.[0] ?? "";
+    assert.ok(/action=["']#["']/i.test(form), "form should keep action=\"#\" (backend-less demo)");
+    assert.ok(!/method=["']get["']/i.test(form), "form must stay POST");
+    const readme = readFileSync(path.join(root, "README.md"), "utf8");
+    assert.match(readme, /front-end-only demo/i, "README should document that this is a front-end-only demo");
+});

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A front-end-only design demo of an Odin-branded sign-up form (The Odin Project). No backend, no data collected.">
     <link rel="stylesheet" href="style.css">
     <title>Sign-Up Form</title>
 </head>
@@ -47,7 +48,7 @@
 
                         <div class="form-cell">
                             <label for="number">Phone Number</label>
-                            <input name="number" id="number" type="tel" inputmode="tel" autocomplete="tel" placeholder="+44 7700 900000" required>
+                            <input name="number" id="number" type="tel" inputmode="tel" autocomplete="tel" placeholder="+44 7700 900000" pattern="\+?[0-9 ()-]{7,20}" title="Phone number, e.g. +44 7700 900000" required>
                         </div>
                     </fieldset>
                     <fieldset>

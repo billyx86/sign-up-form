@@ -164,3 +164,17 @@ button {
     margin-left: 3.5em;
     box-shadow: 0 0 10px 10px #dedede;
 }
+
+/*
+ * Visible keyboard focus for the controls that form and link navigation
+ * rely on. The input fields already have a :focus treatment (above), but
+ * the submit button and the header credit links had none, so a keyboard
+ * user tabbing past the last field lost the focus cue on exactly the most
+ * important control. :focus-visible (not :focus) keeps the outline from
+ * flashing on mouse clicks. The blue matches the input focus treatment.
+ */
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid #0000FF;
+    outline-offset: 2px;
+}

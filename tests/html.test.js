@@ -143,3 +143,33 @@ test("the front-end-only demo posture is documented (action=\"#\" is intentional
     const readme = readFileSync(path.join(root, "README.md"), "utf8");
     assert.match(readme, /front-end-only demo/i, "README should document that this is a front-end-only demo");
 });
+
+test("the phone field carries a permissive E.164-ish pattern (#12)", () => {
+    const m = html.match(/<input\b[^>]*id=["']number["'][^>]*>/i);
+    assert.ok(m, "no #number phone input found");
+    const pattern = m[0].match(/\bpattern=["']([^"']+)["']/i);
+    assert.ok(pattern, "#number should have a pattern attribute so clearly-garbage input is rejected");
+    // Compile the declared pattern (HTML pattern is anchored, so wrap with ^/$)
+    // and verify the intent: reject obvious garbage, keep real numbers.
+    const re = new RegExp(`^${pattern[1]}$`);
+    // legitimate international formats must still pass
+    for (const good of ["+44 7700 900000", "+447700900000", "07700 900000", "+1 (415) 555-0100", "+49 30 123456"]) {
+        assert.ok(re.test(good), `pattern should accept "${good}"`);
+    }
+    // clearly-garbage input must be rejected
+    for (const bad of ["abc", "1", "!!!"]) {
+        assert.ok(!re.test(bad), `pattern should reject "${bad}"`);
+    }
+    // a helpful message should accompany the pattern
+    assert.ok(/\btitle=["'][^"']+["']/.test(m[0]), "#number pattern should have a title attribute so the browser shows a useful message");
+});
+
+test("the page has a non-empty <meta name=\"description\"> (#13)", () => {
+    const head = html.slice(0, html.search(/<\/head>/i));
+    const m = head.match(/<meta\b[^>]*\bname=["']description["'][^>]*>/i);
+    assert.ok(m, "no <meta name=\"description\"> in <head>");
+    const content = m[0].match(/\bcontent=["']([^"']*)["']/i);
+    assert.ok(content, "the description meta has no content attribute");
+    assert.ok(content[1].trim().length > 0, "the description meta content is empty");
+    assert.match(content[1], /front-end-only design demo/i, "description should describe the page as a front-end-only sign-up form demo");
+});

@@ -39,3 +39,23 @@ test("the header credit links have a :focus-visible rule with a visible indicato
         "the link :focus-visible rule must draw a visible indicator (outline or box-shadow)"
     );
 });
+
+test("the 'Norse Bold' @font-face declares format() so unsupported files are skipped (#17)", () => {
+    const rule = ruleFor(/^@font-face$/);
+    assert.ok(rule, "no `@font-face` rule in style.css");
+    assert.match(
+        rule.body,
+        /format\(\s*["']?opentype["']?\s*\)/,
+        "the `@font-face` src must carry a format() hint (the file is a .otf, so format(\"opentype\"))"
+    );
+});
+
+test("the 'Norse Bold' @font-face declares font-display: swap so the heading is not blocked on font load (#17)", () => {
+    const rule = ruleFor(/^@font-face$/);
+    assert.ok(rule, "no `@font-face` rule in style.css");
+    assert.match(
+        rule.body,
+        /font-display\s*:\s*swap/,
+        "the `@font-face` rule must set font-display: swap so the fallback face renders immediately"
+    );
+});

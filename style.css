@@ -1,6 +1,7 @@
 @font-face {
     font-family: "Norse Bold";
-    src: url(assets/Norse-Bold.otf)
+    src: url(assets/Norse-Bold.otf) format("opentype");
+    font-display: swap;
 }
 
 * {
